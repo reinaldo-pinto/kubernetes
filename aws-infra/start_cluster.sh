@@ -5,18 +5,18 @@
 export SSH_KEY_PATH="~/.ssh/id_rsa.pub"
 export KOPS_STATE_STORE="s3://$VAR_PROJECT-kubernetes-devops-teste"
 export NAME=k8testedevops.$VAR_PROJECT.cloud
-export VPC_ID="vpc-a4e46ec1"
-export NETWORK_CIDR=172.30.0.0/16
-export ZONES=us-west-1a 
+export VPC_ID="vpc-d2940bab"
+export NETWORK_CIDR=10.0.0.0/16
+export ZONES=us-east-1a
 #sa-east-1b
-export MASTER_ZONES=us-west-1a
+export MASTER_ZONES=us-east-1a
 #sa-east-1b
 export NODE_SIZE="t2.micro"
 export MASTER_SIZE="m3.medium"
 export DNS_ZONE=$VAR_PROJECT.cloud
 export OFFICE_IP="187.61.6.5/32"
-export MASTER_SG="sg-08db3a6e"
-export NODE_SG="sg-08db3a6e"
+export MASTER_SG="sg-7f83c40e"
+export NODE_SG="sg-7f83c40e"
 export K8_VERSION="1.7.0"
 #export K8_VERSION="v1.6.4"
 #    --networking weave --zones=$ZONES --network-cidr $NETWORK_CIDR \
@@ -57,4 +57,3 @@ function main(){
 }
 option=$1
 main
-

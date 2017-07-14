@@ -1,0 +1,91 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+
+  "Description" : "VPC com 4 subredes. Em duas AvailabilityZones",
+
+  "Parameters" : {
+
+    "CorporateCidrIp" : {
+      "Description" : "Ip que podera fazer SSH e RDP para a rede publica",
+      "Type" : "String",
+      "Default" :  "0.0.0.0/0"
+    },
+
+    "VPCCidrIP" : {
+      "Description" : "Rede do VPC (Essa rede deve abranger todas as subredes)",
+      "Type" : "String",
+      "Default" :  "10.0.0.0/16"
+    }
+  },
+
+  "Resources" : {
+     "VPC" : {
+      "Type" : "AWS::EC2::VPC",
+      "Properties" : {
+        "CidrBlock" : { "Ref" : "VPCCidrIP" }
+      }
+    },
+
+    "InternetGateway" : {
+      "Type" : "AWS::EC2::InternetGateway",
+      "Properties" : {
+      }
+    },
+
+    "AttachGateway" : {
+       "Type" : "AWS::EC2::VPCGatewayAttachment",
+       "Properties" : {
+         "VpcId" : { "Ref" : "VPC" },
+         "InternetGatewayId" : { "Ref" : "InternetGateway" }
+       }
+    },
+    "PublicRouteTable" : {
+      "Type" : "AWS::EC2::RouteTable",
+      "Properties" : {
+        "VpcId" : {"Ref" : "VPC"}
+      }
+    },
+
+    "PrivateRouteTable" : {
+      "Type" : "AWS::EC2::RouteTable",
+      "Properties" : {
+        "VpcId" : {"Ref" : "VPC"}
+      }
+    },
+
+    "PublicRoute" : {
+      "Type" : "AWS::EC2::Route",
+      "Properties" : {
+        "RouteTableId" : { "Ref" : "PublicRouteTable" },
+        "DestinationCidrBlock" : "0.0.0.0/0",
+        "GatewayId" : { "Ref" : "InternetGateway" }
+      }
+    },
+
+
+    "PublicSG" : {
+      "Type" : "AWS::EC2::SecurityGroup",
+      "Properties" : {
+        "GroupDescription" : "Servers in the Public Subnets",
+        "VpcId" : {"Ref" : "VPC"},
+        "SecurityGroupIngress" : [
+          { "IpProtocol" : "tcp", "FromPort" : "0", "ToPort" : "65535", "CidrIp" : { "Ref" : "CorporateCidrIp" } },
+          { "IpProtocol" : "icmp", "FromPort" : "-1", "ToPort" : "-1", "CidrIp" : { "Ref" : "CorporateCidrIp" } }
+        ]
+      }
+    }
+
+  },
+
+  "Outputs" : {
+
+    "VPC" : {
+      "Description" : "VPC",
+      "Value" : {"Ref" : "VPC"}
+
+    }
+
+  }
+
+
+}
