@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata: 
+  creationTimestamp: null
+  namespace: icarros-teste
+  labels: 
+    name: nginx
+  name: nginx
+spec: 
+  ports: 
+  - name: tcp
+ #   protocol: tcp
+    port: 80
+    targetPort: 80
+  selector: 
+    name: nginx
+  sessionAffinity: None
+  type: LoadBalancer
+  loadBalancerSourceRanges:
+    - 187.61.6.5/32
+    - 172.30.0.0/16
+

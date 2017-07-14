@@ -1,0 +1,17 @@
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: nginx
+  namespace: icarros-teste
+spec:
+  maxReplicas: 5
+  minReplicas: 1
+  scaleTargetRef:
+    apiVersion: v1
+    kind: ReplicationController
+    name: nginx
+  targetCPUUtilizationPercentage: 20
+status:
+  currentReplicas: 3
+  desiredReplicas: 0
+
