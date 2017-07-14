@@ -2,7 +2,7 @@ apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
   name: nginx
-  namespace: icarros-teste
+  namespace: $VAR_PROJECT-teste
 spec:
   maxReplicas: 5
   minReplicas: 1

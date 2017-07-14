@@ -29,7 +29,7 @@ spec:
             - --v=4
             - --cloud-provider=aws
             - --skip-nodes-with-local-storage=false
-            - --nodes=2:4:nodes.k8testedevops.icarros.cloud
+            - --nodes=2:4:nodes.k8testedevops.$VAR_PROJECT.cloud
           env:
             - name: AWS_REGION
               value: us-west-1
